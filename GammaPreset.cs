@@ -270,5 +270,54 @@ internal sealed class GammaPreset
                 return ramp;
             }
         },
+
+        // ── Gaming — punchy S-curve with a slight blue lift ─────────
+        new()
+        {
+            Name = "Gaming",
+            Description = "Punchy contrast with vibrant colours \u2014 designed for immersive gaming.",
+            BuildRamp = original =>
+            {
+                // S-curve (s = 1.8) for contrast + per-channel scale:
+                //   R ×0.96 (slight trim), G ×1.00, B ×1.06 (lift)
+                // giving a vivid, cool-toned look popular in gaming.
+                // Worst-case driver deviation stays well within ±32 000.
+                const double s = 1.8;
+                double[] channelScale = [0.96, 1.00, 1.06];
+                var ramp = new ushort[3, 256];
+                for (int c = 0; c < 3; c++)
+                    for (int i = 0; i < 256; i++)
+                    {
+                        double t = original[c, i] / 65535.0;
+                        double curved = t + s * t * (1.0 - t) * (2.0 * t - 1.0);
+                        ramp[c, i] = (ushort)(Math.Clamp(curved * channelScale[c], 0.0, 1.0) * 65535.0);
+                    }
+                return ramp;
+            }
+        },
+
+        // ── Focus Mode — warm-neutral, moderate blue cut ────────────
+        new()
+        {
+            Name = "Focus Mode",
+            Description = "Gentle gamma lift with moderate blue reduction \u2014 easy on the eyes during long coding sessions.",
+            BuildRamp = original =>
+            {
+                // Gamma 0.88 brightens mid-tones slightly for crisp text,
+                // then channel scales apply a warm-neutral tint:
+                //   R ×1.02, G ×0.97, B ×0.75  (25 % blue cut).
+                // Worst-case deviation from identity at i=255: ~16 384  ✓
+                double[] channelScale = [1.02, 0.97, 0.75];
+                var ramp = new ushort[3, 256];
+                for (int c = 0; c < 3; c++)
+                    for (int i = 0; i < 256; i++)
+                    {
+                        double t = original[c, i] / 65535.0;
+                        double lifted = Math.Pow(t, 0.88);
+                        ramp[c, i] = (ushort)(Math.Clamp(lifted * channelScale[c], 0.0, 1.0) * 65535.0);
+                    }
+                return ramp;
+            }
+        },
     ];
 }

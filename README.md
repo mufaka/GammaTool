@@ -13,7 +13,7 @@ via the Win32 [`SetDeviceGammaRamp`](https://learn.microsoft.com/en-us/windows/w
 | **Multi-monitor** | Pick any connected display from a dropdown; each monitor keeps its own settings. |
 | **Brightness & Contrast sliders** | Real-time adjustment (−100 to +100) applied on top of the current LUT. |
 | **Target App picker** | Lists visible windows so you can auto-select the monitor a specific app is on. |
-| **12 built-in presets** | One-click colour/tone shifts — see table below. |
+| **14 built-in presets** | One-click colour/tone shifts — see table below. |
 | **Restore on exit** | Checkbox (on by default) restores every monitor's original gamma ramp when the app closes. |
 
 ## Presets
@@ -36,6 +36,8 @@ Brightness and contrast sliders compose on top of any active preset.
 | Brighten | Gamma 0.75 power curve — lifts mid-tones, anchors black/white |
 | Pastel | Raised shadows + compressed highlights — soft, dreamy look |
 | Vivid | Cubic S-curve — punchier shadows and highlights, midpoint unchanged |
+| Gaming | S-curve (s=1.8) + slight blue lift (×1.06) and red trim (×0.96) — vibrant, cool-toned gaming look |
+| Focus Mode | Gamma 0.88 lift + 25 % blue cut — warm-neutral tone, easy on the eyes for long coding sessions |
 
 ## Requirements
 
