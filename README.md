@@ -21,20 +21,20 @@ Brightness and contrast sliders compose on top of any active preset.
 
 | Preset | Description | Channel Adjustments |
 |---|---|---|
-| Night Mode | Reduces blue light and adds slight warmth to ease eye strain during evening use. | R x1.04, G unchanged, B x0.58 |
-| High Contrast | Stretches the tone curve so dark areas go darker and bright areas go brighter. | 1.5x linear stretch around midpoint, clamped to [0, 65535] |
-| Warm Tone | Adds a warm amber cast, pleasant for reading or media consumption. | R unchanged, G x0.90, B x0.72 |
-| Night Vision (Green) | Green-dominant tint that simulates night-vision goggles. | R x0.52, G unchanged, B x0.52 |
-| Reading Mode | Dimmed warm light that reduces overall brightness for extended reading sessions. | R x0.78, G x0.70, B x0.55 |
-| Sepia | Warm vintage tint reminiscent of aged photographs. | R unchanged, G x0.82, B x0.58 |
+| Brighten | Applies a gamma power curve to lift mid-tones without clipping whites; useful for dim panels. | Gamma 0.75 applied to all channels |
+| Cinema | Lifts blacks and compresses highlights to produce a filmic log look. | Output range remapped to [8 %, 94 %] across all channels |
 | Cool Tone | Adds a blue-shifted cast resembling cool fluorescent lighting. | R x0.85, G x0.95, B unchanged |
 | Dark Room | Red-dominant output suited for astronomy observation or photographic darkrooms. | R x0.85, G x0.52, B x0.52 |
-| Cinema | Lifts blacks and compresses highlights to produce a filmic log look. | Output range remapped to [8 %, 94 %] across all channels |
-| Brighten | Applies a gamma power curve to lift mid-tones without clipping whites; useful for dim panels. | Gamma 0.75 applied to all channels |
-| Pastel | Raises shadow levels and compresses highlights for a soft, low-contrast appearance. | Output range remapped to [14 %, 86 %] across all channels |
-| Vivid | Applies a cubic S-curve to increase contrast in shadows and highlights while leaving the midpoint unchanged. | S-curve with strength 2.0 applied to all channels |
-| Gaming | Combines a contrast S-curve with per-channel scaling for a vibrant, cool-toned look suited to gaming. | S-curve (s=1.8), R x0.96, G x1.00, B x1.06 |
 | Focus Mode | Applies a gentle gamma lift for crisp text rendering and a moderate blue reduction for comfortable extended use. | Gamma 0.88, R x1.02, G x0.97, B x0.75 |
+| Gaming | Combines a contrast S-curve with per-channel scaling for a vibrant, cool-toned look suited to gaming. | S-curve (s=1.8), R x0.96, G x1.00, B x1.06 |
+| High Contrast | Stretches the tone curve so dark areas go darker and bright areas go brighter. | 1.5x linear stretch around midpoint, clamped to [0, 65535] |
+| Night Mode | Reduces blue light and adds slight warmth to ease eye strain during evening use. | R x1.04, G unchanged, B x0.58 |
+| Night Vision (Green) | Green-dominant tint that simulates night-vision goggles. | R x0.52, G unchanged, B x0.52 |
+| Pastel | Raises shadow levels and compresses highlights for a soft, low-contrast appearance. | Output range remapped to [14 %, 86 %] across all channels |
+| Reading Mode | Dimmed warm light that reduces overall brightness for extended reading sessions. | R x0.78, G x0.70, B x0.55 |
+| Sepia | Warm vintage tint reminiscent of aged photographs. | R unchanged, G x0.82, B x0.58 |
+| Vivid | Applies a cubic S-curve to increase contrast in shadows and highlights while leaving the midpoint unchanged. | S-curve with strength 2.0 applied to all channels |
+| Warm Tone | Adds a warm amber cast, pleasant for reading or media consumption. | R unchanged, G x0.90, B x0.72 |
 
 ## Requirements
 
