@@ -296,6 +296,29 @@ internal sealed class GammaPreset
             }
         },
 
+        // ── Shadow lift — power-curve brightening of dark tones ────
+        new()
+        {
+            Name = "Shadow Lift",
+            Description = "Lifts shadow tones via a power curve (γ\u00A0=\u00A01.5), keeping highlights anchored.",
+            BuildRamp = _ =>
+            {
+                // pow(i/255, 1/1.5) ≈ pow(i/255, 0.667): raises the curve more
+                // at low values (shadows) while leaving pure white (i=255) untouched.
+                // Max deviation from identity: ~9 800 at i≈75  ✓
+                const double gamma = 1.5;
+                var ramp = new ushort[3, 256];
+                for (int i = 0; i < 256; i++)
+                {
+                    double normalized = i / 255.0;
+                    double corrected  = Math.Pow(normalized, 1.0 / gamma);
+                    ushort value = (ushort)(corrected * 65535.0);
+                    ramp[0, i] = ramp[1, i] = ramp[2, i] = value;
+                }
+                return ramp;
+            }
+        },
+
         // ── Focus Mode — warm-neutral, moderate blue cut ────────────
         new()
         {
