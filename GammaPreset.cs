@@ -319,6 +319,29 @@ internal sealed class GammaPreset
             }
         },
 
+        // ── Gamma-curve darkener ────────────────────────────────────
+        new()
+        {
+            Name = "Darken",
+            Description = "Pulls mid-tones down via a power curve \u2014 good for overly bright panels or sunlit rooms.",
+            BuildRamp = original =>
+            {
+                // gamma > 1.0 darkens the mid-range while keeping black (0)
+                // and white (65535) anchored.  γ = 1.35 gives a noticeable but
+                // comfortable reduction.  Max deviation from identity: ~8 400
+                // at i≈ 90, well within the ±32 000 driver limit.  ✓
+                const double gamma = 1.35;
+                var ramp = new ushort[3, 256];
+                for (int c = 0; c < 3; c++)
+                    for (int i = 0; i < 256; i++)
+                    {
+                        double t = original[c, i] / 65535.0;
+                        ramp[c, i] = (ushort)(Math.Pow(t, gamma) * 65535.0);
+                    }
+                return ramp;
+            }
+        },
+
         // ── Focus Mode — warm-neutral, moderate blue cut ────────────
         new()
         {
