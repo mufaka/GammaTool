@@ -7,6 +7,7 @@ public partial class Form1 : Form
 {
     private readonly List<MonitorGamma> _monitors = [];
     private readonly List<WindowInfo> _windows = [];
+    private readonly GammaPreset[] _sortedPresets = [.. GammaPreset.All.OrderBy(preset => preset.Name, StringComparer.CurrentCultureIgnoreCase)];
     private readonly Dictionary<int, (int Brightness, int Contrast, int PresetIndex)> _settings = [];
     private bool _suppressSliderEvents;
     private bool _suppressPresetEvent;
@@ -27,7 +28,7 @@ public partial class Form1 : Form
     {
         cboPresets.Items.Clear();
         cboPresets.Items.Add("(None)");
-        foreach (var preset in GammaPreset.All)
+        foreach (var preset in _sortedPresets)
             cboPresets.Items.Add(preset.Name);
         cboPresets.SelectedIndex = 0;
     }
@@ -148,7 +149,7 @@ public partial class Form1 : Form
         if (monitor == null) return;
 
         int presetIdx = cboPresets.SelectedIndex;
-        GammaPreset? preset = presetIdx > 0 ? GammaPreset.All[presetIdx - 1] : null;
+        GammaPreset? preset = presetIdx > 0 ? _sortedPresets[presetIdx - 1] : null;
         monitor.SetPreset(preset);
 
         int idx = cboMonitors.SelectedIndex;
@@ -228,7 +229,7 @@ public partial class Form1 : Form
         _settings[idx] = (trkBrightness.Value, trkContrast.Value, presetIndex);
 
         bool ok = monitor.ApplyBrightnessContrast(trkBrightness.Value, trkContrast.Value);
-        string presetName = presetIndex > 0 ? GammaPreset.All[presetIndex - 1].Name : "None";
+        string presetName = presetIndex > 0 ? _sortedPresets[presetIndex - 1].Name : "None";
         lblStatus.Text = ok
             ? $"Applied: Preset={presetName}, Brightness={trkBrightness.Value}, Contrast={trkContrast.Value}"
             : "\u26A0 SetDeviceGammaRamp failed \u2014 values may exceed driver limits.";
